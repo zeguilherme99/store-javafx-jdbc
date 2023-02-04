@@ -2,6 +2,7 @@ module com.learning.storejavafxjdbc {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.base;
+    requires java.sql;
 
 
     opens com.learning.storejavafxjdbc to javafx.fxml;
