@@ -3,6 +3,7 @@ package com.learning.storejavafxjdbc;
 import com.learning.storejavafxjdbc.db.DbException;
 import com.learning.storejavafxjdbc.listeners.DataChangeListener;
 import com.learning.storejavafxjdbc.model.entities.Seller;
+import com.learning.storejavafxjdbc.model.services.DepartmentService;
 import com.learning.storejavafxjdbc.model.services.SellerService;
 import com.learning.storejavafxjdbc.util.Alerts;
 import com.learning.storejavafxjdbc.util.Utils;
@@ -31,6 +32,8 @@ public class SellerListController implements Initializable, DataChangeListener {
 
 
     private SellerService service;
+
+    private DepartmentService departmentService;
 
     @FXML
     private TableView<Seller> sellerTableView;
@@ -108,7 +111,8 @@ public class SellerListController implements Initializable, DataChangeListener {
 
             SellerFormController controller = loader.getController();
             controller.setSeller(obj);
-            controller.setSellerService(new SellerService());
+            controller.setServices(new SellerService(), new DepartmentService());
+            controller.loadAssociateObjects();
             controller.subscribeDataChangeListener(this);
             controller.updateFormData();
 
@@ -120,6 +124,7 @@ public class SellerListController implements Initializable, DataChangeListener {
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.showAndWait();
         } catch (IOException e) {
+            e.printStackTrace();
             Alerts.showAlert("IO Exception", "Error loading view", e.getMessage(), Alert.AlertType.ERROR);
         }
     }
